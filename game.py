@@ -3,6 +3,9 @@ from datetime import date
 import os
 import time
 import math
+from ASystem import asystem
+from CSystem import csystem
+from GSystem import gsystem
 
 class MainProgram:
     def __init__(self):
@@ -32,13 +35,13 @@ class MainProgram:
             print("Connection: " + str(connection));
             print("Gratification: " + str(gratification));
             base = (automation*1)+(connection*3)+(gratification*7);
-            level = float(format( (base**(1/3.7))*137, '.2f'));
+            level = float(format( (base**(1/3.7))*137, '.3f'));
             level += 137;
-            levelOfHistoryBest = 130000000;
+            levelOfHistoryBest = float(format( (130000000**(1/3.7))*137, '.3f'));
             log = abs(math.log(137/levelOfHistoryBest)/math.log(137)) - abs(math.log(level/levelOfHistoryBest)/math.log(137));
             log = log/abs(math.log(137/levelOfHistoryBest)/math.log(137));
-            log = 1 - log**(.000137/137000);
-            topPercentageInHistory = format(log, '.10%');
+            log = ((1/37) - log*(1/37))**(3);
+            topPercentageInHistory = format(log, '.12%');
             topPercentageInHistoryFloat = log;
             topPercentageInHistoryString = str(float(topPercentageInHistory.replace('%', 'e-2')));
             print("Level: " + str(level));
@@ -65,12 +68,12 @@ class MainProgram:
             elif (topPercentageInHistoryFloat >= 0.000000001/100):
                 print("Your skills belong to top " + topPercentageInHistory[10] + " in 100B Humanity ever Existed.");
             else:
-                print("Your skills belong to top 0." + topPercentageInHistory[11] + " in All Humanity Ever Existed. You broke the limit.");
-            print("\n\tRule 1: Create/Execute Automation System with Flow State. Set aside beliefs and doubts; let the action flow with maximizing the results in mind.\n");
-            print("\tRule 2: Reflect the Rule 1 using the Connection System. Set aside beliefs and find the best action.\n");
-            print("\tRule 3: Rest using the Gratification System. Avoid Stimulation unrelated to ACG.\n");
+                print("Your skills belong to top 0." + topPercentageInHistory[11] + topPercentageInHistory[12] + topPercentageInHistory[13] + " in All Humanity Ever Existed. You broke the limit.");
+            print("\n\tRule 1: Create Automation System with Flow State. Let the action flow, maximizing the results.\n");
+            print("\tRule 2: Reflect the Rule 1 using Connection System. Explain as much visualization and key words as possible.\n");
+            print("\tRule 3: Rest using Gratification System. Always be in ACG-Gratitude State; A state in which being grateful that ACG System exist.\n");
 
-            print("Choose:\n\t1. Update Skills\n\t2. Automation\n\t3. Upgrade Level\n\t4. Open App\n\t5. Exit");
+            print("Choose:\n\t1. Update Skills\n\t2. Automation System\n\t3. Connection System\n\t4. Gratification System\n\t5. Open App\n\t6. Open Trevo\n\t7. Exit");
             choices = int(input());
             if (choices == 1):
                 ins = input("A/C/G which cloc to update: ");
@@ -87,29 +90,16 @@ class MainProgram:
                     gratification = int(input("cloc from G dir: "));
                     localStorage.setItem('g', gratification);
             elif (choices == 2):
-                ins = input("P/D Plan an automation project or develop automation project: ");
-                if ins == "P":
-                    os.system("am start --user 0 -n com.quyetsama.tnotes/com.example.kanban.MainActivity");
-                if ins == "D":
-                    ins2 = input("Project Programming File Extention (Web/Ios/Android if specific OS): ");
-                    try:
-                        print(os.listdir(os.path.expanduser("~/A/"+ins2)));
-                    except:
-                        print("New Skills Unlocked");
-                    finally:
-                        ins = input("Project Name: ");
-                        os.system("mkdir "+os.path.expanduser("~/A/"+ins2+"/"+ins));
-                        ins3 = "~/A/"+ins2.capitalize()+"/"+ins+"/"+"README.md";
-                        os.system("vim "+ins3);
+                asystem.A();
             elif (choices == 3):
-                ins = input("C/G which to upgrade: ");
-                if ins == "C":
-                    os.system(("vim ~/C/"+ filename));
-                elif ins == "G":
-                    os.system(("vim ~/G/"+ filename));
+                csystem.C(filename);
             elif (choices == 4):
-                os.system("am start --user 0 -n com.transsion.XOSLauncher/com.android.launcher3.DynamicVirtualEntryActivity ");
+                gsystem.G(filename);
             elif (choices == 5):
+                os.system("am start --user 0 -n com.transsion.XOSLauncher/com.android.launcher3.DynamicVirtualEntryActivity ");
+            elif (choices == 6):
+                os.system("am start --user 0 -n com.quyetsama.tnotes/com.example.kanban.MainActivity ");
+            elif (choices == 7):
                 break;
 
 thread = MainProgram();
