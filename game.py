@@ -196,6 +196,7 @@ class MainProgram:
         global localStorage, automation, connection, gratification, choices, filename;
         self.defVar();
         self.initVar();
+        print("Show to everything the ACG System!");
         while True:
             print("\nAutomation: " + str(automation));
             print("Connection: " + str(connection));
@@ -213,6 +214,7 @@ class MainProgram:
             percentile = self.z_to_percentile(Z)
             print(f"Your skills are better than {percentile*100:.9f}% all human ever existed.")
             
+            print("\n\tRule 0: The ACG Haki, imagining an event one desire. The closer to the time point the better.\n");
             print("\n\tRule 1: Create Automation System with Flow State. Let the action flow, maximizing the results.\n");
             print("\tRule 2: Reflect the Rule 1 using Connection System. Explain as much visualization and key words as possible.\n");
             print("\tRule 3: Rest using Gratification System. Always be in ACG-Gratitude State; A state in which being grateful that ACG System exist.\n");
