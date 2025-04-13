@@ -212,14 +212,14 @@ class MainProgram:
             
             level = level**(1/3.7);
             levelOfHistoryBest = (((11*60*7*73)**.7)*((.11*60*5*73)**.3)*((11*60*3*73)**.1))**(1/3.7);
-            print(str(int(731*(1+.37)**(level))));
-            print(str(int(731*(1+.37)**(levelOfHistoryBest))));
+            print(f"My Level: {str(int(731*(1+.37)**(level)))}");
+            print(f"History Best Level: {str(int(731*(1+.37)**(levelOfHistoryBest)))}");
             
             # Calculate the Z-score
             Z = self.gaussianDistribution(level);
             Z = self.rightSkewedDistribution(Z);
             percentile = self.z_to_percentile(Z)
-            print(f"Your skills are better than {percentile*100:.9f}% to all ACG Haki Users to ever exist.")
+            print(f"Your skills are better than {percentile*100:.9f}% to all top 1% and ACG System User.")
             
             print("\n\tRule 0: The ACG Haki, imagining an event one desire. The closer to the time point the better.\n");
             print("\tRule 1: Create Automation System with Flow State. Let the action flow, maximizing the results.\n");
