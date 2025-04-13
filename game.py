@@ -7,7 +7,11 @@ from ASystem import asystem
 from CSystem import csystem
 from GSystem import gsystem
 
-leveltest = 0; #For testing equals to 0 if not test
+#Checks percentage when at level
+leveltest = 0;
+
+#Level Up@
+level = 0;
 
 class MainProgram:
     def __init__(self):
@@ -30,25 +34,26 @@ class MainProgram:
             gratification = int(localStorage.getItem('g'));
     def gaussianDistribution(self, level):
         # Parameters
-        mu = 137000**(1/3); #Mean skill level of the population
-        sigma = 13.7; #Standard deviation of skill levels in the population
+        mu = (((7*60*2*37)**.7)*((.1*60*5*37)**.3)*((5*60*2*37)**.1))**(1/3.7); #Mean skill level of the population
+        sigma = (((7*60*2*0.137)**.7)*((.1*60*5*0.137)**.3)*((5*60*2*0.137)**.1))**(1/3.7); #Standard deviation of skill levels in the population
         return (level-mu)/sigma;
     def rightSkewedDistribution(self, Z):
+        global level;
         #Estimated skewed z-score from a converted z-score from assumed normal distributed but a right-skewed distribution
         #Piecewise function
-        if Z < -3.0:
-            print("Class E");
-            return Z+3**(3/abs(Z));
-        elif Z < -2.2:
-            print("Class D to A");
-            return Z+3;
-        elif Z <= 0.5:
-            print("A++");
-            skew_factor = 0.03; #Lower for lower
+        if Z < -2.47:
+            print("E");
+            return Z+2**(1.2/abs(Z));
+        elif Z < 0:
+            print("D to C");
+            return Z+1.4;
+        elif Z <= 2.5:
+            print("B to A");
+            skew_factor = 0.6; #Lower for lower
             return (Z+2.2)**skew_factor;
         else:
-            print("S");
-            skew_factor = 22; #Higher for lower
+            print("A++ to S");
+            skew_factor = 2.5; #Higher for lower
             return math.exp(Z / skew_factor);
     def z_to_percentile(self, Z):
         # Z-Score to Percentile mapping (Standard Normal Distribution)
@@ -193,7 +198,7 @@ class MainProgram:
         return percentile;
     
     def startProgram(self):
-        global localStorage, automation, connection, gratification, choices, filename;
+        global localStorage, automation, connection, gratification, choices, filename, level;
         self.defVar();
         self.initVar();
         print("Show to everything the ACG System!");
@@ -201,51 +206,72 @@ class MainProgram:
             print("\nAutomation: " + str(automation));
             print("Connection: " + str(connection));
             print("Gratification: " + str(gratification));
-            level = (automation*1)+(connection*3)+(gratification*7);
+            # exponential growth function: y = a * (1 + r)^x
+            level = (automation**.7)*(gratification**.3)*(connection**.1);
             level = leveltest or level;
             
-            print(str(level));
-            level = level**(1/3);
-            levelOfHistoryBest = 300000000**(1/3);
+            level = level**(1/3.7);
+            levelOfHistoryBest = (((11*60*7*73)**.7)*((.11*60*5*73)**.3)*((11*60*3*73)**.1))**(1/3.7);
+            print(str(int(731*(1+.37)**(level))));
+            print(str(int(731*(1+.37)**(levelOfHistoryBest))));
             
             # Calculate the Z-score
             Z = self.gaussianDistribution(level);
             Z = self.rightSkewedDistribution(Z);
             percentile = self.z_to_percentile(Z)
-            print(f"Your skills are better than {percentile*100:.9f}% all human ever existed.")
+            print(f"Your skills are better than {percentile*100:.9f}% to all ACG Haki Users to ever exist.")
             
             print("\n\tRule 0: The ACG Haki, imagining an event one desire. The closer to the time point the better.\n");
-            print("\n\tRule 1: Create Automation System with Flow State. Let the action flow, maximizing the results.\n");
+            print("\tRule 1: Create Automation System with Flow State. Let the action flow, maximizing the results.\n");
             print("\tRule 2: Reflect the Rule 1 using Connection System. Explain as much visualization and key words as possible.\n");
             print("\tRule 3: Rest using Gratification System. Always be in ACG-Gratitude State; A state in which being grateful that ACG System exist.\n");
 
-            print("Choose:\n\t1. Update Skills\n\t2. Automation System\n\t3. Connection System\n\t4. Gratification System\n\t5. Open App\n\t6. Open Trevo\n\t7. Exit");
-            choices = int(input());
-            if (choices == 1):
-                ins = input("A/C/G which cloc to update: ");
-                if ins == "A":
-                    os.system("scc ~/A");
-                    automation = int(input("cloc from A dir: "));
-                    localStorage.setItem('a', automation);
-                elif ins == "C":
-                    os.system("scc ~/C");
-                    connection = int(input("cloc from C dir: "));
-                    localStorage.setItem('c', connection);
-                elif ins == "G":
-                    os.system("scc ~/G");
-                    gratification = int(input("cloc from G dir: "));
-                    localStorage.setItem('g', gratification);
-            elif (choices == 2):
+            print("Choose:\n\t0. ACG Haki\n\t1. Update Skills\n\t2. Automation System\n\t3. Connection System\n\t4. Gratification System\n\t5. Open App\n\t6. Open Trevo\n\t7. Exit");
+            choices = input();
+            if not choices:
+                choices = 'none';
+            if (choices[-1] == '0'):
+                while True:
+                    ins = input("A task that is closest to your time point that will lead you to Automation of Everything: ");
+                    ins2 = input(f'{ins} Task Done (y/n)?');
+                    if (ins2 and ins2[-1] == "y"):
+                        path = os.path.join('/data/data/com.termux/files/home/C', filename);
+                        with open(path, 'a+') as file:
+                            file.seek(0);  # Go to start to read contents
+                            lines = file.readlines();
+                            file.write(f'\nACG Haki: {ins}');
+
+                        path = os.path.join('/data/data/com.termux/files/home/G', filename);
+                        with open(path, 'a+') as file:
+                            file.seek(0);  # Go to start to read contents
+                            lines = file.readlines();
+                            file.write(f'\nACG Haki: {ins}');
+                    else:
+                        break;
+            elif (choices[-1] == '1'): 
+                os.system("mkdir /data/data/com.termux/files/home/A");
+                os.system("scc /data/data/com.termux/files/home/A");
+                automation = int(input("cloc from A dir: "));
+                localStorage.setItem('a', automation);
+                os.system("mkdir /data/data/com.termux/files/home/C");
+                os.system("scc /data/data/com.termux/files/home/C");
+                connection = int(input("cloc from C dir: "));
+                localStorage.setItem('c', connection);
+                os.system("mkdir /data/data/com.termux/files/home/G");
+                os.system("scc /data/data/com.termux/files/home/G");
+                gratification = int(input("cloc from G dir: "));
+                localStorage.setItem('g', gratification);
+            elif (choices[-1] == '2'):
                 asystem.A();
-            elif (choices == 3):
+            elif (choices[-1] == '3'):
                 csystem.C(filename);
-            elif (choices == 4):
+            elif (choices[-1] == '4'):
                 gsystem.G(filename);
-            elif (choices == 5):
+            elif (choices[-1] == '5'):
                 os.system("am start --user 0 -n com.transsion.XOSLauncher/com.android.launcher3.DynamicVirtualEntryActivity ");
-            elif (choices == 6):
+            elif (choices[-1] == '6'):
                 os.system("am start --user 0 -n com.quyetsama.tnotes/com.example.kanban.MainActivity ");
-            elif (choices == 7):
+            elif (choices[-1] == '7'):
                 break;
 
 thread = MainProgram();
