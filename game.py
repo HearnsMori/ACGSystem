@@ -1,5 +1,6 @@
 from localStoragePy import localStoragePy
 from datetime import date
+from datetime import datetime
 import os
 import time
 import math
@@ -196,58 +197,160 @@ class MainProgram:
         percentile = lower_percentile + (upper_percentile - lower_percentile) * ((Z - lower_z) / (upper_z - lower_z));
     
         return percentile;
-    
+    def ticktick(self):
+        ticktick = input("Enter state to start now: ");
+
+        now = datetime.now()
+        time_start = now
+        input("done? press enter");
+        input("done? press enter again");
+        now = datetime.now()
+        time_end = now
+        ticktick2 = time_end - time_start;
+        howmany = int((ticktick2.total_seconds()/60)/15)
+        path = os.path.join('/data/data/com.termux/files/home/C', filename);
+        for _ in range(howmany):
+            with open(path, 'a+') as file:
+                file.seek(0);  # Go to start to read contents
+                lines = file.readlines();
+                file.write(f'\nThe TickTick System: {ticktick}');
+            path = os.path.join('/data/data/com.termux/files/home/G', filename);
+            with open(path, 'a+') as file:
+                file.seek(0);  # Go to start to read contents
+                lines = file.readlines();
+                file.write(f'\nThe TickTick System: {ticktick}');
+        print("Done.");
+    def interactive_productivity_tool(self):
+        print("=== Productivity Tool Interactive Assistant ===")
+
+        task = input("1. Choose a task that your tools are involved in: ")
+
+        vision = input("\n2. Set a clear vision for the task outcome (e.g., faster, easier, more accurate, more control): ")
+
+        print("\n3. Break the vision into a list of smallest possible subtasks that can be done concurrently.")
+        subtasks = []
+        while True:
+            sub = input("  - Enter a subtask (or type 'done' to finish): ")
+            if sub.lower() == 'done':
+                break
+            subtasks.append(sub)
+
+        print("\n4. Break each subtask into a linear list of smallest possible tasks.")
+        subtask_tasks = {}
+        for sub in subtasks:
+            print(f"\n  - Tasks for subtask '{sub}':")
+            tasks = []
+            while True:
+                t = input("    * Enter a task (or type 'done' to finish): ")
+                if t.lower() == 'done':
+                    break
+                tasks.append(t)
+            subtask_tasks[sub] = tasks
+        print("\n5. Rate urgency and importance for each subtask (1–10).")
+        subtask_ratings = {}
+        for sub in subtasks:
+            try:
+                urgency = int(input(f"  - Urgency for '{sub}' (1–10): "))
+                importance = int(input(f"  - Importance for '{sub}' (1–10): "))
+            except ValueError:
+                print("    ! Invalid input, defaulting both to 5.")
+                urgency, importance = 5, 5
+            weighted_score = (urgency * 1) + (importance * 7)
+            subtask_ratings[sub] = {
+                'urgency': urgency,
+                'importance': importance,
+                'score': weighted_score
+            }
+
+        # Sort subtasks by score (descending)
+        subtasks.sort(key=lambda s: subtask_ratings[s]['score'], reverse=True)
+
+        print("\nEach task will be assigned 15 minutes. Subtasks prioritized by score (Importance x7 + Urgency).");
+        print("\nEach task will be assigned 15 minutes. Subtasks prioritized by score (Importance x7 + Urgency).")
+
+        for sub in subtasks:  # iterate over prioritized subtasks
+            tasks = subtask_tasks[sub]
+            print(f"\n-- Subtask: {sub} --")
+            i = 0
+            while i < len(tasks):
+                current_task = tasks[i]
+                input(f"    > Task: {current_task} (15 mins) | Press Enter when done...")
+                path = os.path.join('/data/data/com.termux/files/home/C', filename);
+                with open(path, 'a+') as file:
+                    file.seek(0);  # Go to start to read contents
+                    lines = file.readlines();
+                    file.write(f'\nThe Mori System: {current_task}');
+                path = os.path.join('/data/data/com.termux/files/home/G', filename);
+                with open(path, 'a+') as file:
+                    file.seek(0);  # Go to start to read contents
+                    lines = file.readlines();
+                    file.write(f'\nThe Mori System: {current_task}');
+                print("    - Task completed.")
+                while True:
+                    print("    > Options: [C]hange task by index, [I]nsert task after index, [A]dd to end, [S]kip")
+                    choice = input("      Choose action (c/i/a/s): ").lower()
+
+                    if choice == 'c':
+                        print("      Current tasks:")
+                        for idx, t in enumerate(tasks):
+                            print(f"        {idx}: {t}")
+                        try:
+                            change_idx = int(input("      * Enter index of task to change: "))
+                            new_task = input("      * Enter new content: ")
+                            tasks[change_idx] = new_task
+                            continue  # re-do the edited task
+                        except (IndexError, ValueError):
+                            print("      ! Invalid index. Skipping.")
+                    elif choice == 'i':
+                        print("      Current tasks:")
+                        for idx, t in enumerate(tasks):
+                            print(f"        {idx}: {t}")
+                        try:
+                            insert_idx = int(input("      * Enter index to insert *after*: "))
+                            new_task = input("      * Enter new task: ")
+                            tasks.insert(insert_idx + 1, new_task)
+                        except (IndexError, ValueError):
+                            print("      ! Invalid index. Skipping.")
+                    elif choice == 'a':
+                        new_task = input("      * Enter a new task to add at end: ")
+                        tasks.append(new_task)
+                    else:
+                        break
+                i += 1
+            print(f"  > Subtask '{sub}' completed!")
+
+        print("\n=== All tasks completed. You did great! ===")
+
     def startProgram(self):
         global localStorage, automation, connection, gratification, choices, filename, level;
         self.defVar();
         self.initVar();
-        print("Show to everything the ACG System!");
+        print("CG System - A process of mastering consumption and godification. Everything you need to becone a god-tier visionary.");
         while True:
-            print("\nAutomation: " + str(automation));
-            print("Connection: " + str(connection));
-            print("Gratification: " + str(gratification));
+            filename = date.today().strftime("%Y%B%d") + ".txt"
+            print("\nCG of Tools: " + str(automation));
+            print("Change Awareness: " + str(connection));
+            print("Godification Creation: " + str(gratification));
             # exponential growth function: y = a * (1 + r)^x
             level = (automation**.7)*(gratification**.3)*(connection**.1);
             level = leveltest or level;
             
             level = level**(1/3.7);
             levelOfHistoryBest = (((11*60*7*73)**.7)*((.11*60*5*73)**.3)*((11*60*3*73)**.1))**(1/3.7);
-            print(f"My Level: {str(int(731*(1+.37)**(level)))}");
+            print(f"\nMy Level: {str(int(731*(1+.37)**(level)))}");
             print(f"History Best Level: {str(int(731*(1+.37)**(levelOfHistoryBest)))}");
             
             # Calculate the Z-score
             Z = self.gaussianDistribution(level);
             Z = self.rightSkewedDistribution(Z);
-            percentile = self.z_to_percentile(Z)
-            print(f"Your skills are better than {percentile*100:.9f}% to all top 1% and ACG System User.")
-            
-            print("\n\tRule 0: The ACG Haki, imagining an event one desire. The closer to the time point the better.\n");
-            print("\tRule 1: Create Automation System with Flow State. Let the action flow, maximizing the results.\n");
-            print("\tRule 2: Reflect the Rule 1 using Connection System. Explain as much visualization and key words as possible.\n");
-            print("\tRule 3: Rest using Gratification System. Always be in ACG-Gratitude State; A state in which being grateful that ACG System exist.\n");
-
-            print("Choose:\n\t0. ACG Haki\n\t1. Update Skills\n\t2. Automation System\n\t3. Connection System\n\t4. Gratification System\n\t5. Open App\n\t6. Open Trevo\n\t7. Exit");
+            percentile = self.z_to_percentile(Z);
+            print("\nConsumption & Godification of Tools:\n\t0. Mori System\n\t1. Update Skills\n\t2. CG Tool System\n\t3. Change System\n\t4. Godification System\n\t5. The 7 State\n\t6. Exit");
             choices = input();
             if not choices:
                 choices = 'none';
             if (choices[-1] == '0'):
-                while True:
-                    ins = input("A task that is closest to your time point that will lead you to Automation of Everything: ");
-                    ins2 = input(f'{ins} Task Done (y/n)?');
-                    if (ins2 and ins2[-1] == "y"):
-                        path = os.path.join('/data/data/com.termux/files/home/C', filename);
-                        with open(path, 'a+') as file:
-                            file.seek(0);  # Go to start to read contents
-                            lines = file.readlines();
-                            file.write(f'\nACG Haki: {ins}');
-
-                        path = os.path.join('/data/data/com.termux/files/home/G', filename);
-                        with open(path, 'a+') as file:
-                            file.seek(0);  # Go to start to read contents
-                            lines = file.readlines();
-                            file.write(f'\nACG Haki: {ins}');
-                    else:
-                        break;
+                # Run the tool
+                self.interactive_productivity_tool()
             elif (choices[-1] == '1'): 
                 os.system("mkdir /data/data/com.termux/files/home/A");
                 os.system("scc /data/data/com.termux/files/home/A");
@@ -268,10 +371,8 @@ class MainProgram:
             elif (choices[-1] == '4'):
                 gsystem.G(filename);
             elif (choices[-1] == '5'):
-                os.system("am start --user 0 -n com.transsion.XOSLauncher/com.android.launcher3.DynamicVirtualEntryActivity ");
+                self.ticktick();
             elif (choices[-1] == '6'):
-                os.system("am start --user 0 -n com.quyetsama.tnotes/com.example.kanban.MainActivity ");
-            elif (choices[-1] == '7'):
                 break;
 
 thread = MainProgram();
