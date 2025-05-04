@@ -198,18 +198,48 @@ class MainProgram:
     
         return percentile;
     def ticktick(self):
-        ticktick = input("Enter state to start now: ");
+        print("\nAutomation:");
+        print("\t1 - Creating State");
+        print("Connection:");
+        print("\t2 - Learning State");
+        print("Gratification:");
+        print("\t3 - Exercising State");
+        print("\t4 - Resting State");
+        print("\t5 - Hygiene State");
+        print("\t6 - Diet State");
+        print("\t7 - Semi-Unproductive State");
+        ticktick = int(input("\nEnter state to start now: "));
+        print("\n\tIndentify things as: \n\tClass, Variables,\n\tand Functions.");
+        if ticktick == 1:
+            print("Focus on maximizing\n\ttotal-execution variable.");
+        if ticktick == 2:
+            print("Focus on maximizing\n\tconnection variable.");
+        if ticktick == 3:
+            print("\tBreath in 4-4-8.");
+            print("Focus on low, mid,\n\tor high intensity.");
+        if ticktick == 4:
+            print("\tBreath in 4-4-8.");
+            print("\tPlace tongue at the\n\troof of your mouth.");
+            print("\tDo nothing.");
+        if ticktick == 5:
+            print("\tFocus on maximizing\n\thygiene variable.");
+        if ticktick == 6:
+            print("\tFocus on maximizing\n\tdiet variable.");
+        if ticktick == 7:
+            print("\tBreath in 4-4-8.");
+            print("\tPlace tongue at the\n\troof of your mouth.");
+            print("\tYou can now do\n\tanything you want.");
 
         now = datetime.now()
         time_start = now
-        input("done? press enter");
+        input("\ndone? press enter");
         input("done? press enter again");
         now = datetime.now()
         time_end = now
         ticktick2 = time_end - time_start;
         howmany = int((ticktick2.total_seconds()/60)/15)
-        path = os.path.join('/data/data/com.termux/files/home/C', filename);
         for _ in range(howmany):
+            path = os.path.join('/data/data/com.termux/files/home/C', filename);
             with open(path, 'a+') as file:
                 file.seek(0);  # Go to start to read contents
                 lines = file.readlines();
@@ -325,12 +355,12 @@ class MainProgram:
         global localStorage, automation, connection, gratification, choices, filename, level;
         self.defVar();
         self.initVar();
-        print("CG System - A process of mastering consumption and godification. Everything you need to becone a god-tier visionary.");
+        print("ACG System - The three most important broad category tools in life to achieve anything you want.");
         while True:
             filename = date.today().strftime("%Y%B%d") + ".txt"
-            print("\nCG of Tools: " + str(automation));
-            print("Change Awareness: " + str(connection));
-            print("Godification Creation: " + str(gratification));
+            print("\nAutomation Level: " + str(automation));
+            print("Connection Level: " + str(connection));
+            print("Gratification Level: " + str(gratification));
             # exponential growth function: y = a * (1 + r)^x
             level = (automation**.7)*(gratification**.3)*(connection**.1);
             level = leveltest or level;
@@ -344,7 +374,7 @@ class MainProgram:
             Z = self.gaussianDistribution(level);
             Z = self.rightSkewedDistribution(Z);
             percentile = self.z_to_percentile(Z);
-            print("\nConsumption & Godification of Tools:\n\t0. Mori System\n\t1. Update Skills\n\t2. CG Tool System\n\t3. Change System\n\t4. Godification System\n\t5. The 7 State\n\t6. Exit");
+            print("\nACG Tools:\n\t0. Mori System\n\t1. Update Skills\n\t2. CG Tool System\n\t3. Change System\n\t4. Godification System\n\t5. The 7 State\n\t6. Exit");
             choices = input();
             if not choices:
                 choices = 'none';
